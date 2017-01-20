@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2015 Google Inc.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,5 +17,14 @@
     <color name="white">#FFFFFF</color>
     <color name="dark_grey">#424242</color>
     <color name="medium_grey">#9E9E9E</color>
-    <color name="button_grey">#757575</color>
+    <color name="button_grey">#42a1ca</color>
+    <color name="colorPrimary">#42a1ca</color>
+    <!-- Light Indigo -->
+    <color name="colorPrimaryDark">#236886</color>
+    <!-- Dark Indigo -->
+    <color name="colorAccentLight">#e16f6f</color>
+    <color name="colorAccent">#e43d37</color>
+    <color name="colorAccentAlert">#f50900</color>
+    <color name="colorAccentEdit">#01c107</color>
+    <color name="colorAccentNew">#aa35ff</color>
 </resources>

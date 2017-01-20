@@ -14,7 +14,7 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="app_name">"Material Design Codelab "</string>
+    <string name="app_name">"Pyministrator"</string>
     <string name="action_settings">Settings</string>
     <string name="item_title">Palais Garnier</string>
     <string name="item_desc">The Palais Garnier which locates in Paris was built from 1861 for
@@ -28,4 +28,8 @@
         deserunt mollit anim id est laborum.
     </string>
     <string name="detail_location">"8 Rue Scribe, 75009 Paris, France"</string>
+    <string name="stock">Stock</string>
+    <string name="realizar_venta">Realizar Venta</string>
+    <string name="gr_ficos_informes">Gráficos/Informes</string>
+    <string name="empleados">Empleados</string>
 </resources>
