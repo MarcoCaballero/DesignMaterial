@@ -2,8 +2,10 @@ package miliziandevelopers.mydesignmaterial;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +28,9 @@ import android.widget.TextView;
  * create an instance of this fragment.
  */
 public class CardContentFragment extends Fragment {
+
+    private static int getLongClickedSize = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,23 +47,50 @@ public class CardContentFragment extends Fragment {
         public ImageView picture;
         public TextView name;
         public TextView description;
+
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.fragment_card_content, parent, false));
             picture = (ImageView) itemView.findViewById(R.id.card_image);
             name = (TextView) itemView.findViewById(R.id.card_title);
-            description = (TextView) itemView.findViewById(R.id.card_text);  itemView.setOnClickListener(new View.OnClickListener() {
+            description = (TextView) itemView.findViewById(R.id.card_text);
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_POSITION, getAdapterPosition());
-                    context.startActivity(intent);
+                    if (getLongClickedSize > 0) {
+                        if(itemView.getDrawingCacheBackgroundColor() == Color.WHITE){
+
+                            getLongClickedSize++;
+                            itemView.setBackgroundColor(Color.RED);
+                        }else{
+                            getLongClickedSize--;
+                            itemView.setBackgroundColor(Color.WHITE);
+                        }
+
+
+                    } else {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, DetailActivity.class);
+                        intent.putExtra(DetailActivity.EXTRA_POSITION, getAdapterPosition());
+                        context.startActivity(intent);
+                    }
+
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+
+
+                @Override
+                public boolean onLongClick(View v) {
+                    getLongClickedSize++;
+                    itemView.setBackgroundColor(Color.RED);
+                    return true;
                 }
             });
 
             // Adding Snackbar to Action Button inside card
-            Button button = (Button)itemView.findViewById(R.id.action_button);
-            button.setOnClickListener(new View.OnClickListener(){
+            Button button = (Button) itemView.findViewById(R.id.action_button);
+            button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Snackbar.make(v, "Action is pressed",
@@ -68,7 +100,7 @@ public class CardContentFragment extends Fragment {
 
             ImageButton favoriteImageButton =
                     (ImageButton) itemView.findViewById(R.id.favorite_button);
-            favoriteImageButton.setOnClickListener(new View.OnClickListener(){
+            favoriteImageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Snackbar.make(v, "Added to Favorite",
@@ -77,7 +109,7 @@ public class CardContentFragment extends Fragment {
             });
 
             ImageButton shareImageButton = (ImageButton) itemView.findViewById(R.id.share_button);
-            shareImageButton.setOnClickListener(new View.OnClickListener(){
+            shareImageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Snackbar.make(v, "Share article",
@@ -86,6 +118,7 @@ public class CardContentFragment extends Fragment {
             });
         }
     }
+
     /**
      * Adapter to display recycler view.
      */
@@ -95,6 +128,7 @@ public class CardContentFragment extends Fragment {
         private final String[] mPlaces;
         private final String[] mPlaceDesc;
         private final Drawable[] mPlacePictures;
+
         public ContentAdapter(Context context) {
             Resources resources = context.getResources();
             mPlaces = resources.getStringArray(R.array.places);
@@ -122,6 +156,22 @@ public class CardContentFragment extends Fragment {
         @Override
         public int getItemCount() {
             return LENGTH;
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        // Make sure that we are currently visible
+        if (this.isVisible()) {
+            ((MainActivity) getActivity()).reappearFloatingButton(this);
+
+
+            // If we are becoming invisible, then...
+            if (!isVisibleToUser) {
+
+            }
         }
     }
 }

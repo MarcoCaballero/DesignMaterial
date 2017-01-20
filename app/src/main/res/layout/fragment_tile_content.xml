@@ -6,6 +6,8 @@
     android:background="?android:attr/selectableItemBackground"
     android:padding="@dimen/tile_padding">
 
+
+
     <ImageView
         android:id="@+id/tile_picture"
         android:layout_width="match_parent"

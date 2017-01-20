@@ -16,17 +16,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- *
  */
 public class TileContentFragment extends Fragment {
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         RecyclerView recyclerView = (RecyclerView) inflater.inflate(
                 R.layout.recycler_view, container, false);
         ContentAdapter adapter = new ContentAdapter(recyclerView.getContext());
@@ -42,6 +46,7 @@ public class TileContentFragment extends Fragment {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView picture;
         public TextView name;
+
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.fragment_tile_content, parent, false));
             picture = (ImageView) itemView.findViewById(R.id.tile_picture);
@@ -53,10 +58,12 @@ public class TileContentFragment extends Fragment {
                     Intent intent = new Intent(context, DetailActivity.class);
                     intent.putExtra(DetailActivity.EXTRA_POSITION, getAdapterPosition());
                     context.startActivity(intent);
+
                 }
             });
         }
     }
+
     /**
      * Adapter to display recycler view.
      */
@@ -65,6 +72,7 @@ public class TileContentFragment extends Fragment {
         private static final int LENGTH = 18;
         private final String[] mPlaces;
         private final Drawable[] mPlacePictures;
+
         public ContentAdapter(Context context) {
             Resources resources = context.getResources();
             mPlaces = resources.getStringArray(R.array.places);
@@ -92,4 +100,21 @@ public class TileContentFragment extends Fragment {
             return LENGTH;
         }
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        // Make sure that we are currently visible
+        if (this.isVisible()) {
+            ((MainActivity )  getActivity()).reappearFloatingButton(this);
+
+
+            // If we are becoming invisible, then...
+            if (!isVisibleToUser) {
+
+            }
+        }
+    }
+
 }
