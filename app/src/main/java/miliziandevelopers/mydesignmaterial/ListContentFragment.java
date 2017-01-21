@@ -38,6 +38,7 @@ public class ListContentFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         return recyclerView;
     }
 

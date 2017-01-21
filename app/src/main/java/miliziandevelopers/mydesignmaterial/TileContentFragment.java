@@ -40,6 +40,7 @@ public class TileContentFragment extends Fragment {
         int tilePadding = getResources().getDimensionPixelSize(R.dimen.tile_padding);
         recyclerView.setPadding(tilePadding, tilePadding, tilePadding, tilePadding);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
         return recyclerView;
     }
 
