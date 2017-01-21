@@ -2,16 +2,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:icon="@drawable/ic_home_black_24dp"
+            android:icon="@drawable/ic_inbox_black_24dp"
             android:tint="@color/button_grey"
-            android:title="One" />
+            android:title="@string/stock" />
         <item
-            android:icon="@drawable/ic_favorite_black_24dp"
+            android:icon="@drawable/ic_add_shopping_cart_black_24dp"
             android:tint="@color/button_grey"
-            android:title="Two" />
+            android:title="@string/realizar_venta" />
         <item
-            android:icon="@drawable/ic_bookmark_border_black_24dp"
+            android:icon="@drawable/ic_chart"
             android:tint="@color/button_grey"
-            android:title="Three" />
+            android:title="@string/gr_ficos_informes" />
+        <item
+            android:icon="@drawable/ic_folder_shared_black_24dp"
+            android:tint="@color/button_grey"
+            android:title="@string/empleados" />
+
+
     </group>
+    <item
+        android:layout_gravity="bottom"
+        android:title="Sub items">
+        <menu>
+            <item
+                android:icon="@drawable/ic_favorite_black_24dp"
+                android:tint="@color/button_grey"
+                android:title="Otros...." />
+        </menu>
+    </item>
 </menu>

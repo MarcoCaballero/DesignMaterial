@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,16 +25,20 @@ import android.widget.TextView;
  * create an instance of this fragment.
  */
 public class ListContentFragment extends Fragment {
+    private static int getLongClickedSize = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         RecyclerView recyclerView = (RecyclerView) inflater.inflate(
                 R.layout.recycler_view, container, false);
+
+
         ContentAdapter adapter = new ContentAdapter(recyclerView.getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         return recyclerView;
     }
 
@@ -40,6 +46,7 @@ public class ListContentFragment extends Fragment {
         public ImageView avator;
         public TextView name;
         public TextView description;
+
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.fragment_list_content, parent, false));
             avator = (ImageView) itemView.findViewById(R.id.list_avatar);
@@ -48,14 +55,40 @@ public class ListContentFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_POSITION, getAdapterPosition());
-                    context.startActivity(intent);
+                    if (getLongClickedSize > 0) {
+                        if (itemView.getDrawingCacheBackgroundColor() == Color.WHITE) {
+
+                            getLongClickedSize++;
+                            itemView.setBackgroundColor(Color.RED);
+                        } else {
+                            getLongClickedSize--;
+                            itemView.setBackgroundColor(Color.WHITE);
+                        }
+
+
+                    } else {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, DetailActivity.class);
+                        intent.putExtra(DetailActivity.EXTRA_POSITION, getAdapterPosition());
+                        context.startActivity(intent);
+                    }
+
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+
+
+                @Override
+                public boolean onLongClick(View v) {
+                    getLongClickedSize++;
+                    itemView.setBackgroundColor(Color.RED);
+                    return true;
                 }
             });
         }
     }
+
     /**
      * Adapter to display recycler view.
      */
@@ -65,6 +98,7 @@ public class ListContentFragment extends Fragment {
         private final String[] mPlaces;
         private final String[] mPlaceDesc;
         private final Drawable[] mPlaceAvators;
+
         public ContentAdapter(Context context) {
             Resources resources = context.getResources();
             mPlaces = resources.getStringArray(R.array.places);
@@ -92,6 +126,21 @@ public class ListContentFragment extends Fragment {
         @Override
         public int getItemCount() {
             return LENGTH;
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        // Make sure that we are currently visible
+        if (this.isVisible()) {
+            ((MainActivity) getActivity()).reappearFloatingButton(this);
+
+            // If we are becoming invisible, then...
+            if (!isVisibleToUser) {
+
+            }
         }
     }
 }
