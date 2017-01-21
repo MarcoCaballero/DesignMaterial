@@ -36,6 +36,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private ViewPager viewPager;
     private FloatingActionButton fab = null;
     private FloatingActionButton fab1 = null;
     private FloatingActionButton fab2 = null;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Setting ViewPager for each Tabs
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         // Set Tabs inside Toolbar
@@ -158,9 +159,9 @@ public class MainActivity extends AppCompatActivity {
     // Add Fragments to Tabs
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new ListContentFragment(), "Productos");
-        adapter.addFragment(new TileContentFragment(), "Proovedores");
-        adapter.addFragment(new CardContentFragment(), "Gastos");
+        adapter.addFragment(new TileContentFragment(), "Productos");
+        adapter.addFragment(new ListContentFragment(), "Gastos");
+        adapter.addFragment(new CardContentFragment(), "Proovedores");
         viewPager.setAdapter(adapter);
         getFragmentManager().popBackStack();
 
@@ -424,6 +425,10 @@ public class MainActivity extends AppCompatActivity {
         fab3.setVisibility(View.INVISIBLE);
 
     }
+
+    
+
+
 
 
 }

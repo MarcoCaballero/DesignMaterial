@@ -168,6 +168,8 @@ public class CardContentFragment extends Fragment {
             ((MainActivity) getActivity()).reappearFloatingButton(this);
 
 
+
+
             // If we are becoming invisible, then...
             if (!isVisibleToUser) {
 
