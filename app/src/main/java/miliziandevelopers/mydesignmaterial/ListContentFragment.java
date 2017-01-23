@@ -12,11 +12,18 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.List;
+
+import miliziandevelopers.mydesignmaterial.base_de_datos.Bbdd;
+import miliziandevelopers.mydesignmaterial.base_de_datos.Operaciones;
+import miliziandevelopers.mydesignmaterial.modelo.Productos;
 
 
 /**
@@ -26,6 +33,11 @@ import android.widget.TextView;
  */
 public class ListContentFragment extends Fragment {
     private static int getLongClickedSize = 0;
+    //Operaciones data;
+
+
+    public ListContentFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +45,10 @@ public class ListContentFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) inflater.inflate(
                 R.layout.recycler_view, container, false);
 
+        //data = Operaciones.obtenerInstancia(getApplicationContext());
+
+        //final List<Productos> items;
+        //data.obtenerProductos();
 
         ContentAdapter adapter = new ContentAdapter(recyclerView.getContext());
         recyclerView.setAdapter(adapter);
@@ -93,11 +109,13 @@ public class ListContentFragment extends Fragment {
      * Adapter to display recycler view.
      */
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
+
         // Set numbers of List in RecyclerView.
         private static final int LENGTH = 18;
         private final String[] mPlaces;
         private final String[] mPlaceDesc;
         private final Drawable[] mPlaceAvators;
+        List<Productos> items;
 
         public ContentAdapter(Context context) {
             Resources resources = context.getResources();
@@ -109,6 +127,7 @@ public class ListContentFragment extends Fragment {
                 mPlaceAvators[i] = a.getDrawable(i);
             }
             a.recycle();
+            //this.items = items;
         }
 
         @Override
@@ -118,6 +137,10 @@ public class ListContentFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
+            /*Log.d("Control", "Paso por aqui?");
+            Productos p = items.get(position);
+            holder.name.setText(p.getNombre());
+            holder.description.setText(p.getDescripcion());*/
             holder.avator.setImageDrawable(mPlaceAvators[position % mPlaceAvators.length]);
             holder.name.setText(mPlaces[position % mPlaces.length]);
             holder.description.setText(mPlaceDesc[position % mPlaceDesc.length]);

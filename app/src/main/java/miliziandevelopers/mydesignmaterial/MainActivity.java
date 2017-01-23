@@ -3,7 +3,9 @@ package miliziandevelopers.mydesignmaterial;
 import android.animation.Animator;
 import android.app.SearchManager;
 import android.content.res.ColorStateList;
+import android.database.DatabaseUtils;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -23,6 +25,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -32,6 +35,11 @@ import android.view.animation.Interpolator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import miliziandevelopers.mydesignmaterial.base_de_datos.Operaciones;
+import miliziandevelopers.mydesignmaterial.modelo.Productos;
+import miliziandevelopers.mydesignmaterial.modelo.Proveedores;
+import miliziandevelopers.mydesignmaterial.modelo.Usuarios;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // By Pet
+        getApplicationContext().deleteDatabase("pyministrator.db");
+        data = Operaciones.obtenerInstancia(getApplicationContext());
+        new RellenarProductos().execute();
+        // end
         // Adding Toolbar to Main screen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -426,7 +439,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    
+    Operaciones data;
+
+    public class RellenarProductos extends AsyncTask<Void, Void, Void>{
+        @Override
+        protected Void doInBackground(Void... params) {
+            try{
+                data.getDB().beginTransaction();
+
+                //String usr = data.insertarUsuario(new Usuarios("1", "Pedro", "123456", "Fotito"));
+                /*String prod = data.insertarProducto(new Productos("1", "Espada", "Muy larga", 2,
+                        100, 25, "Foto Espada", "1"));*/
+
+                //String prov = data.insertarProveedor(new Proveedores("1", "Muela","123","Calle inventada"));
+                //String prov = data.insertarProveedor(new Proveedores("2", "Otro","1234","Calle inventada2"));
+
+                Log.d("Productos","Productos");
+                DatabaseUtils.dumpCursor(data.obtenerProductos());
+
+
+
+                data.getDB().setTransactionSuccessful();
+            }finally{
+                data.getDB().endTransaction();
+            }
+            return null;
+        }
+    }
 
 
 
